@@ -11,7 +11,7 @@ To install OAH Shell using installer run the following on you *nix machine
 
 ```
 
-curl https://openapphack.github.io/oah-installer/install.sh | bash
+curl -s https://openapphack.github.io/oah-installer/install.sh | bash
 
 ```
 
