@@ -1,0 +1,33 @@
+#Playbook to build res for oah-installer
+---
+- hosts: all
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - name: copy oah scripts to staging area
+      shell: cp /src/bash/*.sh /tmp/src/bash/
+      args:
+        chdir: "{{ source_dir }}"
+      tags: release
+
+    - name: copy install.sh to staging area
+      shell: mv /tmp/bash/install.sh /tmp/bin/
+      args:
+      chdir: "{{ source_dir }}"
+      tags: release
+
+
+    - name: ReplaceTokens in YML & sh files
+      shell: tar -zczf /tmp/res-{{oah_version}}.gz .
+      args:
+      chdir: "{{ source_dir }}"
+      tags: release
+
+
+    - name: Prepare Res Zip
+      shell: tar -zczf /tmp/res-{{oah_version}}.gz .
+      args:
+      chdir: "{{ source_dir }}"
+      tags: release
