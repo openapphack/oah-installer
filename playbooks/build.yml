@@ -6,28 +6,44 @@
     - config.yml
 
   tasks:
-    - name: copy oah scripts to staging area
-      shell: cp /src/bash/*.sh /tmp/src/bash/
+    - name: clone oah-shell to tmp area
+      shell: git clone {{oah-shell-repo}}
       args:
-        chdir: "{{ source_dir }}"
+        chdir: "{{ tmp_dir }}"
+      tags: release
+
+    - name: copy oah scripts to staging area
+      shell: cp {{tmp_dir}}/oah-shell/src/bash/*.sh {{tmp_dir}}/stage/src/bash/
+      args:
+        chdir: "{{tmp_dir}}"
       tags: release
 
     - name: copy install.sh to staging area
-      shell: mv /tmp/bash/install.sh /tmp/bin/
+      shell: mv {{tmp_dir}}/stage/src/bash/install.sh {{tmp_dir}}/stage/bin/
       args:
-      chdir: "{{ source_dir }}"
+      chdir: "{{tmp_dir}}"
       tags: release
 
-
-    - name: ReplaceTokens in YML & sh files
-      shell: tar -zczf /tmp/res-{{oah_version}}.gz .
+    - name: ReplaceTokens for OAH_BROADCAST_SERVICE in YML & sh files
+      shell: sed -i s/@OAH_BROADCAST_SERVICE@/{{OAH_BROADCAST_SERVICE}}/g .
       args:
-      chdir: "{{ source_dir }}"
+      chdir: "{{tmp_dir}}"
       tags: release
 
+    - name: ReplaceTokens for OAH_INSTALLER_SERVICE in YML & sh files
+      shell: sed -i s/@OAH_INSTALLER_SERVICE@/{{OAH_INSTALLER_SERVICE}}/g .
+      args:
+      chdir: "{{tmp_dir}}"
+      tags: release
+
+    - name: ReplaceTokens for OAH_ENVS_INFO_SERVICE in YML & sh files
+      shell: sed -i s/@OAH_ENVS_INFO_SERVICE@/{{OAH_ENVS_INFO_SERVICE}}/g .
+      args:
+      chdir: "{{tmp_dir}}"
+      tags: release
 
     - name: Prepare Res Zip
-      shell: tar -zczf /tmp/res-{{oah_version}}.gz .
+      shell: tar -zczf {{source_dir}}/res/oah-scripts.zip {{tmp_dir}}/stage/
       args:
       chdir: "{{ source_dir }}"
       tags: release
