@@ -7,43 +7,44 @@
 
   tasks:
     - name: clone oah-shell to tmp area
-      shell: git clone {{oah-shell-repo}}
-      args:
-        chdir: "{{ tmp_dir }}"
+      shell: >
+       git clone {{ oah_shell_repo }}
+       chdir="{{ tmp_dir }}"
+       creates="{{ tmp_dir }}"
       tags: release
 
     - name: copy oah scripts to staging area
-      shell: cp {{tmp_dir}}/oah-shell/src/bash/*.sh {{tmp_dir}}/stage/src/bash/
-      args:
-        chdir: "{{tmp_dir}}"
+      shell: >
+       cp {{tmp_dir}}/oah-shell/src/bash/*.sh {{ tmp_dir }}/stage/src/bash/
+       chdir="{{ tmp_dir }}"
       tags: release
 
     - name: copy install.sh to staging area
-      shell: mv {{tmp_dir}}/stage/src/bash/install.sh {{tmp_dir}}/stage/bin/
-      args:
-      chdir: "{{tmp_dir}}"
+      shell: >
+       mv {{ tmp_dir }}/stage/src/bash/install.sh {{ tmp_dir }}/stage/bin/
+       chdir="{{ tmp_dir }}"
       tags: release
 
     - name: ReplaceTokens for OAH_BROADCAST_SERVICE in YML & sh files
-      shell: sed -i s/@OAH_BROADCAST_SERVICE@/{{OAH_BROADCAST_SERVICE}}/g .
-      args:
-      chdir: "{{tmp_dir}}"
+      shell: >
+       sed -i s/@OAH_BROADCAST_SERVICE@/{{ OAH_BROADCAST_SERVICE }}/g .
+       chdir="{{ tmp_dir }}"
       tags: release
 
     - name: ReplaceTokens for OAH_INSTALLER_SERVICE in YML & sh files
-      shell: sed -i s/@OAH_INSTALLER_SERVICE@/{{OAH_INSTALLER_SERVICE}}/g .
-      args:
-      chdir: "{{tmp_dir}}"
+      shell: >
+       sed -i s/@OAH_INSTALLER_SERVICE@/{{ OAH_INSTALLER_SERVICE }}/g .
+       chdir="{{ tmp_dir }}"
       tags: release
 
     - name: ReplaceTokens for OAH_ENVS_INFO_SERVICE in YML & sh files
-      shell: sed -i s/@OAH_ENVS_INFO_SERVICE@/{{OAH_ENVS_INFO_SERVICE}}/g .
-      args:
-      chdir: "{{tmp_dir}}"
+      shell: >
+       sed -i s/@OAH_ENVS_INFO_SERVICE@/{{ OAH_ENVS_INFO_SERVICE }}/g .
+       chdir="{{ tmp_dir }}"
       tags: release
 
     - name: Prepare Res Zip
-      shell: tar -zczf {{source_dir}}/res/oah-scripts.zip {{tmp_dir}}/stage/
-      args:
-      chdir: "{{ source_dir }}"
+      shell: >
+       tar -zczf {{ source_dir }}/res/oah-scripts.zip {{ tmp_dir }}/stage/
+       chdir="{{ source_dir }}"
       tags: release
