@@ -1,5 +1,5 @@
-oah-vm
-oah-d8-vm
-oah-d7-vm
-oah-php5.6-vm
-oah-java8-vm
+oah-vm,0.0.1a1,
+oah-drupal8-vm,,
+oah-drupal7-vm,,
+oah-php5.6-vm,,
+oah-java8-vm,,
