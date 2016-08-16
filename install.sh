@@ -30,5 +30,5 @@ rmdir ${OAH_INSTALLER_TMP_FOLDER}
 function CHECK_OAH_INSTALL
 {
   version=$1
-  echo $(OAH ) | grep ${version}
+  echo $(oah ) | grep ${version}
 }
