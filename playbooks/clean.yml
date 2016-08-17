@@ -1,0 +1,19 @@
+#Playbook to build res for oah-installer
+---
+- hosts: all
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - name: echo values
+      shell: >
+       echo {{ source_dir }}
+       chdir="{{ tmp_dir }}"
+       creates="{{ tmp_dir }}"
+      tags: release
+
+    - name: remove to tmp area
+      shell: >
+       rm -rf {{ tmp_dir }}
+      tags: release

@@ -2,7 +2,13 @@
 #config params for oah-installer build & release
 
 oah_shell_repo: "https://github.com/openapphack/oah-shell.git"
-tmp_dir: "./tmp"
+#source_dir: "/Users/work/Documents/sourcedump/openapphackrepos/oah-installer/build"
+source_dir: "../build"
+tmp_dir: "{{source_dir}}/tmp"
+#build_dir: "/Users/work/Documents/sourcedump/openapphackrepos/oah-installer/build/tmp"
+build_dir: "{{ tmp_dir }}"
+res_dir: "../res"
+#tmp_dir: "/Users/work/Documents/sourcedump/openapphackrepos/oah-installer/build/tmp"
 OAH_INSTALLER_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer"
 OAH_BROADCAST_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer/master/broadcast/"
 OAH_ENVS_INFO_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer/master/envsinfo/candidates.txt"
