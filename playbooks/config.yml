@@ -1,11 +1,18 @@
 ---
 #config params for oah-installer build & release
 
-oah_shell_repo: "https://github.com/openapphack/oah-shell.git"
 source_dir: "../build"
 tmp_dir: "{{source_dir}}/tmp"
 build_dir: "{{ tmp_dir }}"
 res_dir: "../res"
-OAH_INSTALLER_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer"
-OAH_BROADCAST_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer/master/broadcast/"
-OAH_ENVS_INFO_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer/master/envsinfo/candidates.txt"
+oah_namespace: "openapphack"
+oah_shell_repo: "https://github.com/{{oah_namespace}}/oah-shell.git"
+oah_git_repo_host_url: "https://raw.githubusercontent.com/"
+oah_installer_repo_name: "oah-installer"
+oah_installer_branch: "master"
+#OAH_INSTALLER_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer"
+OAH_INSTALLER_SERVICE: "{{oah_git_repo_host_url}}{{ oah_namespace }}/{{oah_installer_repo_name}}"
+#OAH_BROADCAST_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer/master/broadcast/"
+OAH_BROADCAST_SERVICE: "{{oah_git_repo_host_url}}{{ oah_namespace }}/{{oah_installer_repo_name}}/{{ oah_installer_branch }}/broadcast/"
+#OAH_ENVS_INFO_SERVICE: "https://raw.githubusercontent.com/openapphack/oah-installer/master/envsinfo/candidates.txt"
+OAH_ENVS_INFO_SERVICE: "{{oah_git_repo_host_url}}{{ oah_namespace }}/{{oah_installer_repo_name}}/{{ oah_installer_branch }}/envsinfo/candidates.txt"
