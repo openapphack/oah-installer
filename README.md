@@ -16,20 +16,3 @@ curl -s https://openapphack.github.io/oah-installer/install.sh | bash
 ```
 
 
-# Steps to Update oah-installer
-
-- Build Resources
-```
-ansible-playbook build.yml
-
-```
-
-
-# Make a new oah release
-
-run
-
-```
-ansible-playbook release.yml
-
-```
