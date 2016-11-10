@@ -1,0 +1,19 @@
+# playbook to test a oah-installer for a new OAH release locally
+---
+- hosts: all
+
+  vars_files:
+    - config.yml
+    - test-config.yml
+
+  tasks:
+    - name: create tmp directory to build oah local test server
+      file: state=directory recurse=yes path={{ tmp_dir }}/oah-installer/
+
+    - name: Start Python Webserver on 8999
+      shell: >
+       python -m SimpleHTTPServer 8999
+
+    - name: Test local oah-installer server
+      shell: >
+      curl  {{ OAH_LOCAL_TEST_WEBSERVER_URL }} | grep 

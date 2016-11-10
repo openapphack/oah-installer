@@ -1,0 +1,15 @@
+---
+#config params for oah-installer build & release
+OAH_REL_VERSION: 0.0.1-alpha.1
+tmp_dir: "../tmp"
+res_dir: "../res"
+OAH_LOCAL_TEST_WEBSERVER_ROOT: "{{tmp_dir}}/oah-installer"
+OAH_LOCAL_TEST_WEBSERVER_PORT: 8999
+OAH_LOCAL_TEST_WEBSERVER_URL: "http://localhost:{{ OAH_LOCAL_TEST_WEBSERVER_PORT }}/"
+OAH_INSTALLER_REPO_NAME: "oah-installer"
+#OAH_INSTALLER_SERVICE: "http://localhost:8999/oah-installer"
+OAH_INSTALLER_SERVICE: "{{ OAH_LOCAL_TEST_WEBSERVER_URL }}/{{OAH_INSTALLER_REPO_NAME}}"
+#OAH_BROADCAST_SERVICE: "http://localhost:8999/oah-installer/broadcast/"
+OAH_BROADCAST_SERVICE: "{{ OAH_LOCAL_TEST_WEBSERVER_URL }}/{{OAH_INSTALLER_REPO_NAME}}/{{ OAH_INSTALLER_BRANCH }}/broadcast/"
+#OAH_ENVS_INFO_SERVICE: "http://localhost:8999/oah-installer/envsinfo/candidates.txt"
+OAH_ENVS_INFO_SERVICE: "{{ OAH_LOCAL_TEST_WEBSERVER_URL }}/{{OAH_INSTALLER_REPO_NAME}}/{{ OAH_INSTALLER_BRANCH }}/envsinfo/candidates.txt"
