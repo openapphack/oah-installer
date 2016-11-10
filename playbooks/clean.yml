@@ -1,0 +1,16 @@
+#Playbook to build res for oah-installer
+---
+- hosts: all
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - debug: >
+       msg=" {{ source_dir }} {{ tmp_dir }} "
+      tags: build
+
+    - name: remove to tmp area
+      shell: >
+       rm -rf {{ tmp_dir }}
+      tags: build
