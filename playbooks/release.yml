@@ -1,1 +1,21 @@
 # playbook to update a oah-installer to a new release
+---
+- hosts: all
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - name: create tmp directory to build oah distribution
+      file: state=directory recurse=yes path={{ tmp_dir }}/stage/src/bash/
+# TODOS
+#
+# check REL_VERSION same as VERSION
+#
+# checkout oah-installer gh-pages branch to tmp folder
+
+# pull oah-installer master branch
+
+# commit oah-installer gh-pages branch
+
+# update VERSION

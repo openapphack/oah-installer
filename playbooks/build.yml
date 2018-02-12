@@ -6,28 +6,112 @@
     - config.yml
 
   tasks:
+    - name: create tmp directory to build oah distribution
+      file: state=directory recurse=yes path={{ tmp_dir }}/stage/src/bash/
+
+    - name: create stage/bin directory to build oah distribution
+      file: state=directory recurse=yes path={{ tmp_dir }}/stage/bin/
+
+    # - name: make tmp dir
+    #   shell: >
+    #    mkdir {{ tmp_dir }}
+    #   tags: release
+
+    # - name: make tmp bash dir
+    #   shell: >
+    #    mkdir -p "{{ tmp_dir }}/stage/src/bash/"
+    #   tags: release
+
+    # - name: make tmp bin dir
+    #   shell: >
+    #    mkdir -p "{{ tmp_dir }}/stage/bin/"
+    #   tags: release
+
+    - name: clone oah-shell to tmp area
+      shell: >
+       git clone {{ oah_shell_repo }}
+       chdir="{{ tmp_dir }}"
+      tags: release
+
+    # - name: Fetch oah-scripts to copy
+    #   find: paths="{{ tmp_dir }}/oah-shell/src/bash/" recurse=yes patterns="*.sh"
+    #   register: file_to_copy
+    #
+    # - name: copy oah scripts to staging area
+    #   copy: src='{{ tmp_dir }}/oah-shell/src/bash/{{ item.path }}' dest='{{ tmp_dir }}/stage/src/bash'
+    #   with_items: files_to_copy.files
+
+    # # debug: msg={{ item }}
+    # - name: copy oah scripts to staging area
+    #   copy:
+    #    src: "{{ build_dir }}/oah-shell/src/bash/{{ item }}"
+    #    dest: "{{ build_dir }}/stage/src/bash/"
+    #    chdir: "{{ build_dir }}"
+    #   with_fileglob:
+    #    - "*.sh"
+
+
     - name: copy oah scripts to staging area
-      shell: cp /src/bash/*.sh /tmp/src/bash/
-      args:
-        chdir: "{{ source_dir }}"
+      shell: >
+       cp -r {{ item.src }} {{ item.dest }}
+       creates={{ item.creates }}
+      with_items:
+        - src: "{{ tmp_dir }}/oah-shell/src/bash/*.sh"
+          dest: "{{ tmp_dir }}/stage/src/bash/"
+          creates: "{{ tmp_dir }}/stage/src/bash/oah-init.sh"
+        - src: "{{ tmp_dir }}/stage/src/bash/install.sh"
+          dest: "{{ tmp_dir }}/stage/bin/install.sh"
+          creates: "{{ tmp_dir }}/stage/bin/install.sh"
       tags: release
 
-    - name: copy install.sh to staging area
-      shell: mv /tmp/bash/install.sh /tmp/bin/
-      args:
-      chdir: "{{ source_dir }}"
-      tags: release
+    # - name: copy install.sh to staging area
+    #   shell: >
+    #    mv "{{ tmp_dir }}/stage/src/bash/install.sh" "{{ tmp_dir }}/stage/bin"
+    #    chdir="{{ tmp_dir }}"
+    #   tags: release
 
+    # - name: copy install.sh to staging area
+    #   copy:
+    #      src: "{{ build_dir }}/stage/src/bash/install.sh"
+    #      dest: "{{ build_dir }}/stage/bin/install.sh"
+    #      chdir: "{{ build_dir }}"
+    #   tags: release
 
-    - name: ReplaceTokens in YML & sh files
-      shell: tar -zczf /tmp/res-{{oah_version}}.gz .
-      args:
-      chdir: "{{ source_dir }}"
-      tags: release
+    # - name: ReplaceTokens for OAH_BROADCAST_SERVICE in YML & sh files
+    #   shell: >
+    #    sed s_@OAH_BROADCAST_SERVICE@_{{ OAH_BROADCAST_SERVICE }}_g *.sh
+    #    chdir="{{ tmp_dir }}"
+    #   tags: release
 
+    - name: ReplaceTokens for OAH_BROADCAST_SERVICE in YML & sh files
+      replace:
+        dest="{{ tmp_dir }}/stage/bin/install.sh"
+        regexp='@OAH_BROADCAST_SERVICE@'
+        replace='{{ OAH_BROADCAST_SERVICE }}'
+        backup=yes
+
+    - name: ReplaceTokens for OAH_INSTALLER_SERVICE in YML & sh files
+      replace:
+        dest="{{ tmp_dir }}/stage/bin/install.sh"
+        regexp='@OAH_INSTALLER_SERVICE@'
+        replace='{{ OAH_INSTALLER_SERVICE }}'
+        backup=yes
+
+    - name: ReplaceTokens for OAH_ENVS_INFO_SERVICE in YML & sh files
+      replace:
+        dest="{{ tmp_dir }}/stage/bin/install.sh"
+        regexp='@OAH_ENVS_INFO_SERVICE@'
+        replace='{{ OAH_ENVS_INFO_SERVICE }}'
+        backup=yes
+
+    - debug: msg="tar -zcvf {{ res_dir }}/oah-scripts.zip {{ tmp_dir }}/stage"
 
     - name: Prepare Res Zip
-      shell: tar -zczf /tmp/res-{{oah_version}}.gz .
-      args:
-      chdir: "{{ source_dir }}"
+      command: >
+       tar -zcvf {{ item.zipfile }} {{ item.directory }}
+       creates={{ item.creates }}
+      with_items:
+        - zipfile: "{{ res_dir }}/oah-scripts.zip"
+          directory: "{{ tmp_dir }}/stage"
+          creates: "{{ res_dir }}/oah-scripts.zip"
       tags: release
