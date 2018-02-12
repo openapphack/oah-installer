@@ -1,5 +1,6 @@
-OAH_VERSION=0.0.1a1
+OAH_VERSION=0.0.1-a1
 OAH_INSTALLER_TMP_FOLDER=/tmp/oah-installer
+
 OAH_SHELL_GITURL="https://github.com/openapphack/oah-shell.git"
 OAH_SHELL_REPO=oah-shell
 #CHECK GIT
