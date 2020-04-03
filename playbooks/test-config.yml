@@ -1,6 +1,6 @@
 ---
 #config params for oah-installer build & release
-OAH_REL_VERSION: 0.0.1-alpha.1
+OAH_REL_VERSION: 0.0.1-a1
 tmp_dir: "../tmp"
 res_dir: "../res"
 OAH_LOCAL_TEST_WEBSERVER_ROOT: "{{tmp_dir}}/oah-installer"

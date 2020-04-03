@@ -1,6 +1,6 @@
 ---
 #config params for oah-installer build & release
-OAH_REL_VERSION: 0.0.1a1
+OAH_REL_VERSION: 0.0.1-a1
 source_dir: "../build"
 tmp_dir: "{{source_dir}}/tmp"
 build_dir: "{{ tmp_dir }}"
