@@ -73,4 +73,4 @@ source ${OAH_DIR}/bin/oah-init.sh
 
 # TODO Check oah installation
 
-rmdir ${OAH_INSTALLER_TMP_FOLDER}
+rm -rf ${OAH_INSTALLER_TMP_FOLDER}
