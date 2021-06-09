@@ -17,7 +17,8 @@ echo "Looking for a previous installation of OAH..."
 
 echo $(CHECK_OAH_INSTALL ${OAH_VERSION}) > OAH_VERSION_FOUND
 
-echo "OAH version check resulted in =>  $OAH_VERSION_FOUND ""!!
+echo "OAH version check resulted in $OAH_VERSION_FOUND "
+
 #check if oah already installed
 if [$OAH_VERSION_FOUND == ${OAH_VERSION}] ; then
  echo "Nothing to do current version found is the latest version!!"
@@ -72,4 +73,4 @@ source ${OAH_DIR}/bin/oah-init.sh
 
 # TODO Check oah installation
 
-rmdir ${OAH_INSTALLER_TMP_FOLDER}
+rm -rf ${OAH_INSTALLER_TMP_FOLDER}

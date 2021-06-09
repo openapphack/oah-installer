@@ -7,7 +7,7 @@ Using Github Raw User Content
 
 ```
 
-curl -s https://raw.githubusercontent.com/openapphack/oah-installer/install.sh | bash
+curl -s https://raw.githubusercontent.com/openapphack/oah-installer/master/install.sh | bash
 
 ```
 
